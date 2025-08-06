@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
-@Entity()
+@Entity('usuarios')
 export class Usuario {
   @PrimaryGeneratedColumn()
   id: number;
@@ -17,6 +17,12 @@ export class Usuario {
 
   @Column({ default: 'tecnico' })
   tipo: 'gestor' | 'tecnico';
+
+  @CreateDateColumn()
+  criadoEm: Date;
+
+  @UpdateDateColumn()
+  atualizadoEm: Date;
 
   @BeforeInsert()
   async hashSenha() {
