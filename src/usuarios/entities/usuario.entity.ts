@@ -19,10 +19,10 @@ export class Usuario {
   tipo: 'gestor' | 'tecnico';
 
   @CreateDateColumn()
-  criadoEm: Date;
+  criado_em: Date;
 
   @UpdateDateColumn()
-  atualizadoEm: Date;
+  atualizado_em: Date;
 
   @BeforeInsert()
   async hashSenha() {

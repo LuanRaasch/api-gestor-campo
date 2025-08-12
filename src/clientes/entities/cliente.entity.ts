@@ -19,8 +19,8 @@ export class Cliente {
     telefone: string;
 
     @CreateDateColumn()
-    criadoEm: Date;
+    criado_em: Date;
 
     @UpdateDateColumn()
-    atualizadoEm: Date;
+    atualizado_em: Date;
 }

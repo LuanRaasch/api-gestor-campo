@@ -30,8 +30,8 @@ export class Atividade{
     cliente: Cliente;
 
     @CreateDateColumn()
-    criadoEm: Date;
+    criado_em: Date;
 
     @UpdateDateColumn()
-    atualizadoEm: Date;
+    atualizado_em: Date;
 }
