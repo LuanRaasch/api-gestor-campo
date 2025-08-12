@@ -11,4 +11,4 @@ import { Usuario } from './entities/usuario.entity';
   exports: [UsuariosService], // importante se outros módulos forem usar
 })
 // eslint-disable-next-line prettier/prettier
-export class UsuariosModule { }
+export class UsuariosModule {}

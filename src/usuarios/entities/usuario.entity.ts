@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BeforeInsert,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 @Entity('usuarios')
@@ -17,6 +24,9 @@ export class Usuario {
 
   @Column({ default: 'tecnico' })
   tipo: 'gestor' | 'tecnico';
+
+  // @Column()
+  // ativo: boolean;
 
   @CreateDateColumn()
   criado_em: Date;

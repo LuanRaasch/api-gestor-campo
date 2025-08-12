@@ -1,26 +1,35 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 // cliente.entity.ts
 @Entity('clientes')
 export class Cliente {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    nome: string;
+  @Column()
+  nome: string;
 
-    @Column({ unique: true })
-    cnpj: string;
+  @Column({ unique: true })
+  cnpj: string;
 
-    @Column()
-    endereco: string;
+  @Column()
+  endereco: string;
 
-    @Column()
-    telefone: string;
+  @Column()
+  telefone: string;
 
-    @CreateDateColumn()
-    criado_em: Date;
+  // @Column()
+  // ativo: boolean;
 
-    @UpdateDateColumn()
-    atualizado_em: Date;
+  @CreateDateColumn()
+  criado_em: Date;
+
+  @UpdateDateColumn()
+  atualizado_em: Date;
 }
