@@ -24,8 +24,8 @@ export class Cliente {
   @Column()
   telefone: string;
 
-  // @Column()
-  // ativo: boolean;
+  @Column({ default: true })
+  ativo: boolean;
 
   @CreateDateColumn()
   criado_em: Date;

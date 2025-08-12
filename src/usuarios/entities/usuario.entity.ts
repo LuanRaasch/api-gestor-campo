@@ -25,8 +25,8 @@ export class Usuario {
   @Column({ default: 'tecnico' })
   tipo: 'gestor' | 'tecnico';
 
-  // @Column()
-  // ativo: boolean;
+  @Column({ default: true })
+  ativo: boolean;
 
   @CreateDateColumn()
   criado_em: Date;
