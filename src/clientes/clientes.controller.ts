@@ -1,6 +1,8 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { ClientesService } from './clientes.service';
 import { Cliente } from './entities/cliente.entity';
+import { UpdateClienteDto } from './dto/update-cliente.dto';
+import { CreateClienteDto } from './dto/create-cliente.dto';
 
 @Controller('clientes')
 // eslint-disable-next-line prettier/prettier
@@ -18,12 +20,12 @@ export class ClientesController {
   }
 
   @Post()
-  create(@Body() usuario: Partial<Cliente>): Promise<Cliente> {
+  create(@Body() usuario: CreateClienteDto): Promise<Cliente> {
     return this.clientesService.create(usuario);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() usuario: Partial<Cliente>): Promise<Cliente | null> {
+  update(@Param('id') id: number, @Body() usuario: UpdateClienteDto): Promise<Cliente | null> {
     return this.clientesService.update(id, usuario);
   }
 

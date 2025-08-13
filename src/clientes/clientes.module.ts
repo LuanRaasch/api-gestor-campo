@@ -9,5 +9,4 @@ import { Cliente } from './entities/cliente.entity';
   providers: [ClientesService],
   controllers: [ClientesController],
 })
-// eslint-disable-next-line prettier/prettier
 export class ClientesModule {}

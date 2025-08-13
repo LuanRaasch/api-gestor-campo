@@ -2,9 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cliente } from './entities/cliente.entity';
 import { Repository } from 'typeorm';
+import { CreateClienteDto } from './dto/create-cliente.dto';
+import { UpdateClienteDto } from './dto/update-cliente.dto';
 
 @Injectable()
-// eslint-disable-next-line prettier/prettier
 export class ClientesService {
   constructor(
     @InjectRepository(Cliente)
@@ -19,11 +20,11 @@ export class ClientesService {
     return this.clienteRepository.findOne({ where: { id } });
   }
 
-  create(cliente: Partial<Cliente>): Promise<Cliente> {
+  create(cliente: CreateClienteDto): Promise<Cliente> {
     return this.clienteRepository.save(cliente);
   }
 
-  async update(id: number, usuario: Partial<Cliente>): Promise<Cliente | null> {
+  async update(id: number, usuario: UpdateClienteDto): Promise<Cliente | null> {
     await this.clienteRepository.update(id, usuario);
     return this.findOne(id);
   }
