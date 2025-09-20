@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
 import { JwtService } from '@nestjs/jwt';
@@ -29,7 +31,12 @@ export class AuthService {
       throw new UnauthorizedException('Email ou senha inválidos');
     }
 
-    return this.gerarToken(usuario);
+    const access_token = this.gerarToken(usuario);
+
+    return {
+      usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email, tipo: usuario.tipo },
+      access_token,
+    };
   }
 
   gerarToken(usuario: any) {
@@ -38,8 +45,9 @@ export class AuthService {
       email: usuario.email,
       tipo: usuario.tipo,
     };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+
+    const token = this.jwtService.sign(payload);
+
+    return token;
   }
 }
