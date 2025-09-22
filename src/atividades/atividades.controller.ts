@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Query } from '@nestjs/common';
 import { AtividadesService } from './atividades.service';
 import { Atividade } from './entities/atividade.entity';
 import { CreateAtividadeDto } from './dto/create-atividade.dto';
@@ -9,8 +9,13 @@ export class AtividadesController {
   constructor(private readonly atividadesService: AtividadesService) {}
 
   @Get()
-  findAll(): Promise<Atividade[]> {
-    return this.atividadesService.findAll();
+  findAll(
+    @Query('status') status?: string,
+    @Query('titulo') titulo?: string,
+    @Query('data_inicio') dataInicio?: string,
+    @Query('data_fim') dataFim?: string,
+  ): Promise<Atividade[]> {
+    return this.atividadesService.findAll({ status, titulo, dataInicio, dataFim });
   }
 
   @Get(':id')

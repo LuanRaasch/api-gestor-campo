@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Atividade } from './entities/atividade.entity';
-import { Repository } from 'typeorm';
+import { Repository, Between, Like } from 'typeorm';
 import { CreateAtividadeDto } from './dto/create-atividade.dto';
 
 @Injectable()
@@ -12,8 +14,27 @@ export class AtividadesService {
     private readonly atividadeRepository: Repository<Atividade>,
   ) {}
 
-  findAll(): Promise<Atividade[]> {
-    return this.atividadeRepository.find();
+  findAll(filtros: {
+    status?: string;
+    titulo?: string;
+    dataInicio?: string;
+    dataFim?: string;
+  }): Promise<Atividade[]> {
+    const where: any = {};
+
+    if (filtros.status) {
+      where.status = filtros.status;
+    }
+
+    if (filtros.titulo) {
+      where.titulo = Like(`%${filtros.titulo}%`);
+    }
+
+    if (filtros.dataInicio && filtros.dataFim) {
+      where.data = Between(new Date(filtros.dataInicio), new Date(filtros.dataFim));
+    }
+
+    return this.atividadeRepository.find({ where });
   }
 
   findOne(id: number): Promise<Atividade | null> {
