@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable } from '@nestjs/common';
@@ -34,7 +35,7 @@ export class AtividadesService {
       where.data = Between(new Date(filtros.dataInicio), new Date(filtros.dataFim));
     }
 
-    return this.atividadeRepository.find({ where });
+    return this.atividadeRepository.find({ where, relations: ['usuario', 'cliente'] });
   }
 
   findOne(id: number): Promise<Atividade | null> {
@@ -62,5 +63,44 @@ export class AtividadesService {
   async remove(id: number): Promise<void> {
     await this.atividadeRepository.delete(id);
     return undefined;
+  }
+
+  async countByStatusWithFilter(dataInicio?: string, dataFim?: string) {
+    const query = this.atividadeRepository
+      .createQueryBuilder('atividade')
+      .select('atividade.status', 'status')
+      .addSelect('COUNT(*)', 'total')
+      .groupBy('atividade.status');
+
+    if (dataInicio && dataFim) {
+      query.andWhere('atividade.data BETWEEN :inicio AND :fim', {
+        inicio: dataInicio,
+        fim: dataFim,
+      });
+    }
+
+    return query.getRawMany();
+  }
+
+  async resumoPorTecnico() {
+    const raw = await this.atividadeRepository
+      .createQueryBuilder('atividade')
+      .leftJoin('atividade.usuario', 'usuario')
+      .select('usuario.id', 'id')
+      .addSelect('usuario.nome', 'nome')
+      .addSelect(`COUNT(CASE WHEN atividade.status = 'concluido' THEN 1 END)`, 'concluidas')
+      .addSelect(`COUNT(CASE WHEN atividade.status = 'pendente' THEN 1 END)`, 'pendentes')
+      .addSelect(`COUNT(CASE WHEN atividade.status = 'em_andamento' THEN 1 END)`, 'em_andamento')
+      .groupBy('usuario.id')
+      .getRawMany();
+
+    // converte os valores para inteiro
+    return raw.map((item) => ({
+      id: item.id,
+      nome: item.nome,
+      concluidas: parseInt(item.concluidas, 10),
+      pendentes: parseInt(item.pendentes, 10),
+      em_andamento: parseInt(item.em_andamento, 10),
+    }));
   }
 }

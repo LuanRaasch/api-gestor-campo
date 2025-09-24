@@ -1,12 +1,9 @@
-// Atividade
-// └── id, titulo, descricao, data, hora_inicio, hora_fim, status, tecnico_id, gestor_id
 import { Cliente } from 'src/clientes/entities/cliente.entity';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  BeforeInsert,
   ManyToOne,
   JoinColumn,
   CreateDateColumn,

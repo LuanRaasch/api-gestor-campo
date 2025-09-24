@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { Controller, Get, Post, Body, Param, Put, Delete, Query } from '@nestjs/common';
 import { AtividadesService } from './atividades.service';
 import { Atividade } from './entities/atividade.entity';
@@ -16,6 +17,19 @@ export class AtividadesController {
     @Query('data_fim') dataFim?: string,
   ): Promise<Atividade[]> {
     return this.atividadesService.findAll({ status, titulo, dataInicio, dataFim });
+  }
+
+  @Get('dashboard')
+  countByStatusWithFilters(
+    @Query('data_inicio') dataInicio?: string,
+    @Query('data_fim') dataFim?: string,
+  ): Promise<{ status: string; count: number }[]> {
+    return this.atividadesService.countByStatusWithFilter(dataInicio, dataFim);
+  }
+
+  @Get('dashboard/porTecnico')
+  async dashboardPorTecnico() {
+    return this.atividadesService.resumoPorTecnico();
   }
 
   @Get(':id')
