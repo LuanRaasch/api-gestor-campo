@@ -20,13 +20,13 @@ export class ClientesController {
   }
 
   @Post()
-  create(@Body() usuario: CreateClienteDto): Promise<Cliente> {
-    return this.clientesService.create(usuario);
+  create(@Body() cliente: CreateClienteDto): Promise<Cliente> {
+    return this.clientesService.create(cliente);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() usuario: UpdateClienteDto): Promise<Cliente | null> {
-    return this.clientesService.update(id, usuario);
+  update(@Param('id') id: number, @Body() cliente: UpdateClienteDto): Promise<Cliente | null> {
+    return this.clientesService.update(id, cliente);
   }
 
   @Delete(':id')

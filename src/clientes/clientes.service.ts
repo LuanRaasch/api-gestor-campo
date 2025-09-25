@@ -24,8 +24,8 @@ export class ClientesService {
     return this.clienteRepository.save(cliente);
   }
 
-  async update(id: number, usuario: UpdateClienteDto): Promise<Cliente | null> {
-    await this.clienteRepository.update(id, usuario);
+  async update(id: number, cliente: UpdateClienteDto): Promise<Cliente | null> {
+    await this.clienteRepository.update(id, cliente);
     return this.findOne(id);
   }
 
