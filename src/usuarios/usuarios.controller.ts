@@ -13,6 +13,11 @@ export class UsuariosController {
     return this.usuariosService.findAll();
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: number): Promise<Usuario | null> {
+    return this.usuariosService.findOne(id);
+  }
+
   @Put(':id')
   update(@Param('id') id: number, @Body() usuario: UpdateUsuarioDto): Promise<Usuario | null> {
     return this.usuariosService.update(id, usuario);
