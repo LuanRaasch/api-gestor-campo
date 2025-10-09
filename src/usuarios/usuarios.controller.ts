@@ -1,4 +1,4 @@
-import { Controller, Get, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Put, Delete, Body, Param, Query } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { Usuario } from './entities/usuario.entity';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -9,8 +9,8 @@ export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
   @Get()
-  findAll(): Promise<Usuario[]> {
-    return this.usuariosService.findAll();
+  findAll(@Query('tipo') tipo?: string, @Query('ativo') ativo?: boolean): Promise<Usuario[]> {
+    return this.usuariosService.findAll({ tipo, ativo });
   }
 
   @Get(':id')

@@ -1,17 +1,16 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Query } from '@nestjs/common';
 import { ClientesService } from './clientes.service';
 import { Cliente } from './entities/cliente.entity';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 
 @Controller('clientes')
-// eslint-disable-next-line prettier/prettier
 export class ClientesController {
   constructor(private readonly clientesService: ClientesService) {}
 
   @Get()
-  findAll(): Promise<Cliente[]> {
-    return this.clientesService.findAll();
+  findAll(@Query('ativo') ativo?: boolean): Promise<Cliente[]> {
+    return this.clientesService.findAll({ ativo });
   }
 
   @Get(':id')

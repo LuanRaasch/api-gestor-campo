@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,8 +14,18 @@ export class UsuariosService {
     private usuarioRepository: Repository<Usuario>,
   ) {}
 
-  findAll(): Promise<Usuario[]> {
-    return this.usuarioRepository.find();
+  findAll(filtro: { tipo?: string; ativo?: boolean }): Promise<Usuario[]> {
+    const where: any = {};
+
+    if (filtro.tipo) {
+      where.tipo = filtro.tipo;
+    }
+
+    if (filtro.ativo) {
+      where.ativo = filtro.ativo;
+    }
+
+    return this.usuarioRepository.find({ where });
   }
 
   findOne(id: number): Promise<Usuario | null> {

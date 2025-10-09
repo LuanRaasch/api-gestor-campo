@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cliente } from './entities/cliente.entity';
@@ -12,8 +14,14 @@ export class ClientesService {
     private readonly clienteRepository: Repository<Cliente>,
   ) {}
 
-  findAll(): Promise<Cliente[]> {
-    return this.clienteRepository.find();
+  findAll(filtro: { ativo?: boolean }): Promise<Cliente[]> {
+    const where: any = {};
+
+    if (filtro.ativo) {
+      where.ativo = filtro.ativo;
+    }
+
+    return this.clienteRepository.find({ where });
   }
 
   findOne(id: number): Promise<Cliente | null> {

@@ -27,6 +27,18 @@ export class Atividade {
   @Column()
   data: Date;
 
+  @Column()
+  prazo: Date;
+
+  @Column()
+  latitude: string;
+
+  @Column()
+  longitude: string;
+
+  @Column()
+  endereco: string;
+
   @ManyToOne(() => Usuario)
   @JoinColumn({ name: 'usuario_id' })
   usuario: Usuario;

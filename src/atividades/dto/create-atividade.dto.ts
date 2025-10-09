@@ -1,5 +1,6 @@
 // create-atividade.dto.ts
-import { IsDate, IsNotEmpty, IsNumber, IsString, isDate } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateAtividadeDto {
   @IsString()
@@ -14,9 +15,27 @@ export class CreateAtividadeDto {
   @IsNotEmpty()
   status: 'pendente' | 'em_andamento' | 'concluida';
 
+  @Type(() => Date)
   @IsDate()
   @IsNotEmpty()
   data: Date;
+
+  @Type(() => Date)
+  @IsDate()
+  @IsNotEmpty()
+  prazo: Date;
+
+  @IsString()
+  @IsNotEmpty()
+  latitude: string;
+
+  @IsString()
+  @IsNotEmpty()
+  longitude: string;
+
+  @IsString()
+  @IsNotEmpty()
+  endereco: string;
 
   @IsNumber()
   @IsNotEmpty()

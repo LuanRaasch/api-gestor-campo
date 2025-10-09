@@ -48,6 +48,10 @@ export class AtividadesService {
       descricao: dto.descricao,
       status: dto.status,
       data: dto.data,
+      prazo: dto.prazo,
+      latitude: dto.latitude,
+      longitude: dto.longitude,
+      endereco: dto.endereco,
       usuario: { id: dto.usuarioId } as any,
       cliente: { id: dto.clienteId } as any,
     });
@@ -73,7 +77,7 @@ export class AtividadesService {
       .groupBy('atividade.status');
 
     if (dataInicio && dataFim) {
-      query.andWhere('atividade.data BETWEEN :inicio AND :fim', {
+      query.andWhere('atividade.dataInicio BETWEEN :inicio AND :fim', {
         inicio: dataInicio,
         fim: dataFim,
       });
